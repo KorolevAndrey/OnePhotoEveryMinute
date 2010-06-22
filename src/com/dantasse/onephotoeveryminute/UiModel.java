@@ -1,5 +1,7 @@
 package com.dantasse.onephotoeveryminute;
 
+import android.graphics.Bitmap;
+
 public class UiModel {
 
   public enum State {
@@ -9,7 +11,8 @@ public class UiModel {
   
   private MainActivity view;
   private State currentState = State.NOT_TAKING_PHOTOS;
-  private int photosTaken = 0;
+  private int photoCount = 0;
+  private Bitmap currentImage;
   
   public UiModel(MainActivity view) {
     this.view = view;
@@ -23,11 +26,19 @@ public class UiModel {
     return currentState;
   }
   
-  public void takePhoto() {
-    photosTaken++;
+  public void incrementPhotoCount() {
+    photoCount++;
     view.update();
   }
-  public int getNumPhotosTaken() {
-    return photosTaken;
+  public int getPhotoCount() {
+    return photoCount;
+  }
+  
+  public void setCurrentImage(Bitmap newImage) {
+    this.currentImage = newImage;
+    view.update();
+  }
+  public Bitmap getCurrentImage() {
+    return currentImage;
   }
 }
