@@ -41,6 +41,8 @@ public class OpemCamera {
     camera.startPreview();
   }
   public void tearDown() {
+    // TODO(dantasse) if you start and stop the app a couple times, this throws
+    // an exception.
     camera.stopPreview();
     camera.release();
   }

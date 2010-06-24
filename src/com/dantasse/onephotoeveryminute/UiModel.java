@@ -13,6 +13,7 @@ public class UiModel {
   private State currentState = State.NOT_TAKING_PHOTOS;
   private int photoCount = 0;
   private Bitmap currentImage;
+  private int durationSeconds = 0;
   
   public UiModel(MainActivity view) {
     this.view = view;
@@ -40,5 +41,15 @@ public class UiModel {
   }
   public Bitmap getCurrentImage() {
     return currentImage;
+  }
+
+  /** Set the amount of time, in seconds, between pictures taken. */
+  public void setDurationSeconds(int durationSeconds) {
+    this.durationSeconds = durationSeconds;
+    view.update();
+  }
+  /** Get the amount of time, in seconds, between pictures taken. */
+  public int getDurationSeconds() {
+    return durationSeconds;
   }
 }

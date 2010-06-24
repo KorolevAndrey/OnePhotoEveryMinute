@@ -8,31 +8,43 @@ public class UiController {
   // new Handler() grabs the current thread.
   private Handler handler = new Handler();
   private OpemCamera camera = new OpemCamera(this);
+  private UiModel model;
+  private MainActivity view;  
   
   private Runnable takePhotoTask = new Runnable() {
     public void run() {
       camera.takePhoto();
       model.incrementPhotoCount();
-      handler.postDelayed(this, 10000L);
+      handler.postDelayed(this, model.getDurationSeconds() * 1000);
     }
   };
   
-  private UiModel model;
-  
-  public UiController(UiModel model) {
+  public UiController(UiModel model, MainActivity view) {
     this.model = model;
+    this.view = view;
   }
+  
   public void tearDown() {
     handler.removeCallbacks(takePhotoTask);
     camera.tearDown();
   }
-  
+
   public void startTakingPhotos() {
-    // TODO check model's current state first, to see if it's already taking photos
+    int durationSeconds = view.getDurationSeconds();
+    if (durationSeconds <= 0) {
+      return; //TODO(dantasse) display some error
+    }
+    model.setDurationSeconds(durationSeconds);
     model.setCurrentState(UiModel.State.TAKING_PHOTOS);
     handler.removeCallbacks(takePhotoTask);
     handler.post(takePhotoTask);
   }
+
+  public void stopTakingPhotos() {
+    model.setCurrentState(UiModel.State.NOT_TAKING_PHOTOS);
+    handler.removeCallbacks(takePhotoTask);
+  }
+
   public void displayImage(Bitmap image) {
     model.setCurrentImage(image);
   }

@@ -5,7 +5,35 @@
     android:layout_height="fill_parent"
     >
 
-<Button android:text="@string/start" android:id="@+id/StartButton" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-<TextView android:text="@+id/TextView01" android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-<ImageView android:id="@+id/ImageView01" android:layout_width="fill_parent" android:layout_height="fill_parent"></ImageView>
+<Button android:text="@string/start"
+    android:id="@+id/StartButton" 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"></Button>
+<Button android:text="@string/stop"
+    android:id="@+id/StopButton"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"></Button>
+<TextView android:text="@+id/TextView01" 
+    android:id="@+id/TextView01" 
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content"></TextView>
+<LinearLayout android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+  <com.dantasse.onephotoeveryminute.NumberPicker
+      android:id="@+id/MinutePicker"
+      android:layout_width="wrap_content" 
+      android:layout_height="wrap_content">
+  </com.dantasse.onephotoeveryminute.NumberPicker>
+  <com.dantasse.onephotoeveryminute.NumberPicker
+     android:id="@+id/SecondPicker"
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content">
+  </com.dantasse.onephotoeveryminute.NumberPicker>
+</LinearLayout>
+<ImageView 
+    android:id="@+id/ImageView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+</ImageView>
 </LinearLayout>
