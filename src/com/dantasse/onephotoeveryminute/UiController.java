@@ -7,7 +7,7 @@ public class UiController {
 
   // new Handler() grabs the current thread.
   private Handler handler = new Handler();
-  private OpemCamera camera = new OpemCamera(this);
+  private OpemCamera camera = new OpemCamera(this, new FileSaver());
   private UiModel model;
   private MainActivity view;  
   
