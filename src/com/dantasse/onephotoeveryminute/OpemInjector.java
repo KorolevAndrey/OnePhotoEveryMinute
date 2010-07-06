@@ -15,4 +15,8 @@ public class OpemInjector {
     camera.startPreview();
     return camera;
   }
+  
+  public static FileSaver injectFileSaver() {
+    return new FileSaver();
+  }
 }

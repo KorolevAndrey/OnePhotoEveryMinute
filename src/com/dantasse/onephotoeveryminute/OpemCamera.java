@@ -7,7 +7,6 @@ import android.hardware.Camera.PictureCallback;
 
 public class OpemCamera {
 
-//  private UiController controller;
   private Camera camera;
   private FileSaver fileSaver;
   
@@ -20,11 +19,11 @@ public class OpemCamera {
     }
   };
 
-  public OpemCamera(FileSaver fileSaver, Camera camera) {
-//    this.controller = controller;
+  public OpemCamera(Camera camera, FileSaver fileSaver) {
     this.camera = camera;
     this.fileSaver = fileSaver;
   }
+  
   public void tearDown() {
     // TODO(dantasse) if you start and stop the app a couple times, this throws
     // an exception.

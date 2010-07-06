@@ -7,8 +7,8 @@ public class UiController {
 
   // new Handler() grabs the current thread.
   private Handler handler = new Handler();
-  private OpemCamera camera = new OpemCamera(new FileSaver(),
-      OpemInjector.injectCamera());
+  private OpemCamera camera = new OpemCamera(OpemInjector.injectCamera(),
+      OpemInjector.injectFileSaver());
   private UiModel model;
   private MainActivity view;  
   
