@@ -7,7 +7,7 @@ import android.hardware.Camera.PictureCallback;
 
 public class OpemCamera {
 
-  private UiController controller;
+//  private UiController controller;
   private Camera camera;
   private FileSaver fileSaver;
   
@@ -20,13 +20,9 @@ public class OpemCamera {
     }
   };
 
-  public OpemCamera(UiController controller, FileSaver fileSaver) {
-    this.controller = controller;
-    camera = Camera.open();
-    // You must call startPreview() even if you don't want a preview so the
-    // camera can determine focus and exposure.
-    // http://code.google.com/p/android/issues/detail?id=1702
-    camera.startPreview();
+  public OpemCamera(FileSaver fileSaver, Camera camera) {
+//    this.controller = controller;
+    this.camera = camera;
     this.fileSaver = fileSaver;
   }
   public void tearDown() {
