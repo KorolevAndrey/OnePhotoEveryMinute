@@ -15,6 +15,14 @@ public class UiModel {
   private Bitmap currentImage;
   private int durationSeconds = 0;
   
+  private static UiModel instance = null;
+  public static UiModel getInstance() {
+    if (instance == null) {
+      instance = new UiModel(OpemInjector.getView());
+    }
+    return instance;
+  }
+  
   public UiModel(MainActivity view) {
     this.view = view;
   }

@@ -32,9 +32,13 @@ public class MainActivity extends Activity implements OnClickListener {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
+    
+    // This is a little kludgey; ideally, the injector shouldn't really have
+    // state, but it's the one "init" method you have to do, so it's not so bad.
+    OpemInjector.setView(this);
 
-    model = new UiModel(this);
-    controller = new UiController(model, this, OpemInjector.injectOpemCamera());
+    model = OpemInjector.injectUiModel();
+    controller = OpemInjector.injectUiController();
 
     startButton = (Button) findViewById(R.id.StartButton);
     startButton.setOnClickListener(this);
