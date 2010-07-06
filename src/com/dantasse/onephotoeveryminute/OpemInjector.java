@@ -8,19 +8,15 @@ import android.hardware.Camera;
 public class OpemInjector {
 
   public static OpemCamera injectOpemCamera() {
-    return new OpemCamera(injectCamera(), injectFileSaver());
+    return new OpemCamera(OpemInjector.injectCamera(),
+        OpemInjector.injectFileSaver());
   }
   
   public static Camera injectCamera() {
-    Camera camera = Camera.open();
-    // You must call startPreview() even if you don't want a preview so the
-    // camera can determine focus and exposure.
-    // http://code.google.com/p/android/issues/detail?id=1702
-    camera.startPreview();
-    return camera;
+    return Camera.open();
   }
   
   public static FileSaver injectFileSaver() {
-    return new FileSaver();
+    return FileSaver.getInstance();
   }
 }

@@ -1,9 +1,7 @@
 package com.dantasse.onephotoeveryminute;
 
-
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
-
 
 public class OpemCamera {
 
@@ -18,6 +16,22 @@ public class OpemCamera {
       counter++;
     }
   };
+
+  /**
+   * There should only be one OpemCamera, because it's just a wrapper around
+   * the Android Camera.
+   */
+  private static OpemCamera instance = null;
+  public static OpemCamera getInstance() {
+    if (instance == null) {
+      instance = OpemInjector.injectOpemCamera();
+      // You must call startPreview() even if you don't want a preview so the
+      // camera can determine focus and exposure.
+      // http://code.google.com/p/android/issues/detail?id=1702
+      instance.camera.startPreview();
+    }
+    return instance;
+  }
 
   public OpemCamera(Camera camera, FileSaver fileSaver) {
     this.camera = camera;
