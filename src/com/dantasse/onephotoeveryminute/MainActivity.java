@@ -1,5 +1,6 @@
 package com.dantasse.onephotoeveryminute;
 
+import com.dantasse.onephotoeveryminute.uielement.NumberPicker;
 import com.dantasse.onephotoeveryminute.UiModel.State;
 
 import android.app.Activity;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.dantasse.onephotoeveryminute;
+package com.dantasse.onephotoeveryminute.uielement;
 
 import android.content.Context;
 import android.os.Handler;

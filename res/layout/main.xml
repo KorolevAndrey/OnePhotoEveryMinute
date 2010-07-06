@@ -20,16 +20,16 @@
 <LinearLayout android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-  <com.dantasse.onephotoeveryminute.NumberPicker
+  <com.dantasse.onephotoeveryminute.uielement.NumberPicker
       android:id="@+id/MinutePicker"
       android:layout_width="wrap_content" 
       android:layout_height="wrap_content">
-  </com.dantasse.onephotoeveryminute.NumberPicker>
-  <com.dantasse.onephotoeveryminute.NumberPicker
+  </com.dantasse.onephotoeveryminute.uielement.NumberPicker>
+  <com.dantasse.onephotoeveryminute.uielement.NumberPicker
      android:id="@+id/SecondPicker"
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content">
-  </com.dantasse.onephotoeveryminute.NumberPicker>
+  </com.dantasse.onephotoeveryminute.uielement.NumberPicker>
 </LinearLayout>
 <ImageView 
     android:id="@+id/ImageView01"
