@@ -7,6 +7,10 @@ import android.hardware.Camera;
  */
 public class OpemInjector {
 
+  public static OpemCamera injectOpemCamera() {
+    return new OpemCamera(injectCamera(), injectFileSaver());
+  }
+  
   public static Camera injectCamera() {
     Camera camera = Camera.open();
     // You must call startPreview() even if you don't want a preview so the

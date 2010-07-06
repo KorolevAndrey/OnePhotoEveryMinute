@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements OnClickListener {
     setContentView(R.layout.main);
 
     model = new UiModel(this);
-    controller = new UiController(model, this);
+    controller = new UiController(model, this, OpemInjector.injectOpemCamera());
 
     startButton = (Button) findViewById(R.id.StartButton);
     startButton.setOnClickListener(this);

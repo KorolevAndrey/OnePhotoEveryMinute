@@ -7,8 +7,7 @@ public class UiController {
 
   // new Handler() grabs the current thread.
   private Handler handler = new Handler();
-  private OpemCamera camera = new OpemCamera(OpemInjector.injectCamera(),
-      OpemInjector.injectFileSaver());
+  private OpemCamera camera;
   private UiModel model;
   private MainActivity view;  
   
@@ -20,9 +19,10 @@ public class UiController {
     }
   };
   
-  public UiController(UiModel model, MainActivity view) {
+  public UiController(UiModel model, MainActivity view, OpemCamera camera) {
     this.model = model;
     this.view = view;
+    this.camera = camera;
   }
   
   public void tearDown() {
