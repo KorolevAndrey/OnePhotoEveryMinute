@@ -24,7 +24,8 @@ public class OpemCamera {
   private static OpemCamera instance = null;
   public static OpemCamera getInstance() {
     if (instance == null) {
-      instance = OpemInjector.injectOpemCamera();
+      instance = new OpemCamera(OpemInjector.injectCamera(),
+          OpemInjector.injectFileSaver());
       // You must call startPreview() even if you don't want a preview so the
       // camera can determine focus and exposure.
       // http://code.google.com/p/android/issues/detail?id=1702
@@ -46,9 +47,6 @@ public class OpemCamera {
   }
   
   public void takePhoto() {
-    // first two params are shutterCallback for when the camera's shutter opens
-    // and takes a picture, and rawCallback for when the raw photo data is
-    // available.
     // TODO(dantasse) add flash/focus/something?
     camera.takePicture(null, null, jpegCallback);
   }

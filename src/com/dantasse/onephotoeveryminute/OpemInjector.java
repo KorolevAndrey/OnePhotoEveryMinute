@@ -8,8 +8,7 @@ import android.hardware.Camera;
 public class OpemInjector {
 
   public static OpemCamera injectOpemCamera() {
-    return new OpemCamera(OpemInjector.injectCamera(),
-        OpemInjector.injectFileSaver());
+    return OpemCamera.getInstance();
   }
   
   public static Camera injectCamera() {

@@ -57,8 +57,7 @@ public class FileSaver {
     String state = Environment.getExternalStorageState();
     if (Environment.MEDIA_MOUNTED.equals(state)) {
 
-      File destFile = new File(directory.getAbsolutePath() + File.separator +
-          filename);
+      File destFile = new File(directory, filename);
       try {
         destFile.createNewFile();
         BufferedOutputStream outputStream = new BufferedOutputStream(
