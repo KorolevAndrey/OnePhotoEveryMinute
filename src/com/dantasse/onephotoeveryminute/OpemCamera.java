@@ -34,7 +34,8 @@ public class OpemCamera {
     return instance;
   }
 
-  public OpemCamera(Camera camera, FileSaver fileSaver) {
+  // visible for testing
+  OpemCamera(Camera camera, FileSaver fileSaver) {
     this.camera = camera;
     this.fileSaver = fileSaver;
   }

@@ -47,11 +47,11 @@ public class FileSaver {
     }
   }
 
-  public FileSaver(File directory) {
+  private FileSaver(File directory) {
     this.directory = directory;
   }
 
-  /** Saves the data to the file at /sdcard/Pictures/(filename) */
+  /** Saves the data to the file in |directory| */
   public void save(byte[] data, String filename) {
 
     String state = Environment.getExternalStorageState();

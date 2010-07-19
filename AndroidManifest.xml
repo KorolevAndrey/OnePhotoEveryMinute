@@ -24,4 +24,5 @@
 <uses-feature android:name="android.hardware.camera" />
 
 
+<instrumentation android:targetPackage="com.dantasse.onephotoeveryminute" android:name="android.test.InstrumentationTestRunner"></instrumentation>
 </manifest> 
