@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.os.Environment;
-import android.text.format.DateFormat;
 
 
 /**
@@ -26,9 +25,10 @@ public class FileSaver {
   private static FileSaver instance = null;
   public static FileSaver getInstance() {
     if (instance == null) {
-      instance = new FileSaver(getPicturesDirectory(
-          Environment.getExternalStorageState(),
-          Environment.getExternalStorageDirectory()));
+      instance = new FileSaver();
+//      instance = new FileSaver(getPicturesDirectory(
+//          Environment.getExternalStorageState(),
+//          Environment.getExternalStorageDirectory()));
     }
     return instance;
   }
@@ -39,23 +39,34 @@ public class FileSaver {
    * @param root where the device wants you to put data.  Typically found by
    *   calling Environment.getExternalStorageDirectory.
    */
-  public static File getPicturesDirectory(String storageState, File root) {
-    if (Environment.MEDIA_MOUNTED.equals(storageState)) {
+//  public static File getPicturesDirectory(String storageState, File root) {
+//    if (Environment.MEDIA_MOUNTED.equals(storageState)) {
+//      // Save things in /sdcard/Pictures, as per 
+//      // http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
+//      File picturesDir = new File(root, "Pictures");
+//      File thisTimeDir = new File(picturesDir, formatter.format(new Date()));
+//      thisTimeDir.mkdirs();
+//      return thisTimeDir;
+//    } else {
+//      OpemInjector.injectUiModel().setErrorText("Can't find the SD card.");
+//      return null;
+//    }
+//  }
+
+  private FileSaver() {
+    if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
       // Save things in /sdcard/Pictures, as per 
       // http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
+      File root = Environment.getExternalStorageDirectory();
       File picturesDir = new File(root, "Pictures");
       File thisTimeDir = new File(picturesDir, formatter.format(new Date()));
       thisTimeDir.mkdirs();
-      return thisTimeDir;
+      this.directory = thisTimeDir;
     } else {
-//      OpemInjector.injectUiModel().setErrorText("Can't find the SD card.");
-      return null;
+      // can't find the SD card, should error or something.
     }
   }
 
-  private FileSaver(File directory) {
-    this.directory = directory;
-  }
   // you have to call this after creating a FileSaver so there's no circular
   // dependency issue. ugh.
   private void setUiController(UiController controller) {
