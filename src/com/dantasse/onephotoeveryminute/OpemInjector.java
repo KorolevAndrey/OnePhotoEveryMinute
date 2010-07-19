@@ -15,8 +15,12 @@ public class OpemInjector {
     OpemInjector.view = view; 
   }
 
+  private static UiController controller = null;
   public static UiController injectUiController() {
-    return new UiController(injectUiModel(), view, injectOpemCamera());
+    if (controller == null) {
+      controller = new UiController(injectUiModel(), view, injectOpemCamera());
+    }
+    return controller;
   }
   
   public static UiModel injectUiModel() {

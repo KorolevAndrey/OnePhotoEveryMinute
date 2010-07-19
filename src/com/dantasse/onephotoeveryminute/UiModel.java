@@ -14,6 +14,8 @@ public class UiModel {
   private int photoCount = 0;
   private Bitmap currentImage;
   private int durationSeconds = 0;
+  private String errorText = "";
+  private String outputDirText = "";
   
   private static UiModel instance = null;
   public static UiModel getInstance() {
@@ -59,5 +61,23 @@ public class UiModel {
   /** Get the amount of time, in seconds, between pictures taken. */
   public int getDurationSeconds() {
     return durationSeconds;
+  }
+
+  public void setErrorText(String errorText) {
+    this.errorText = errorText;
+    view.update();
+  }
+
+  public String getErrorText() {
+    return errorText;
+  }
+
+  public void setOutputDirText(String outputDirText) {
+    this.outputDirText = outputDirText;
+    view.update();
+  }
+
+  public String getOutputDirText() {
+    return outputDirText;
   }
 }

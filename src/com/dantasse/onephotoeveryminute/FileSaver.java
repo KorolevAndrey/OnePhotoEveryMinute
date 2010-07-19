@@ -4,17 +4,24 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.os.Environment;
+import android.text.format.DateFormat;
 
 
 /**
  * Handles saving pictures to the SD card.
  */
 public class FileSaver {
+  
+  private static SimpleDateFormat formatter = 
+    new SimpleDateFormat("yyyyMMdd'-'hhmmss");
 
   /** The directory where all the files will be saved to */
   public File directory;
+  public UiController controller;
 
   private static FileSaver instance = null;
   public static FileSaver getInstance() {
@@ -26,8 +33,6 @@ public class FileSaver {
     return instance;
   }
 
-   
-  // TODO (dantasse) this is I guess the least testable bit.
   /**
    * @param storageState whether there's an SD card mounted or not.  Typically
    *   found by calling Environment.getExternalStorageState.
@@ -39,21 +44,30 @@ public class FileSaver {
       // Save things in /sdcard/Pictures, as per 
       // http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
       File picturesDir = new File(root, "Pictures");
-      picturesDir.mkdirs();
-      return picturesDir;
+      File thisTimeDir = new File(picturesDir, formatter.format(new Date()));
+      thisTimeDir.mkdirs();
+      return thisTimeDir;
     } else {
+//      OpemInjector.injectUiModel().setErrorText("Can't find the SD card.");
       return null;
-      // TODO(dantasse) handle if you can't write to the file.
     }
   }
 
   private FileSaver(File directory) {
     this.directory = directory;
   }
+  // you have to call this after creating a FileSaver so there's no circular
+  // dependency issue. ugh.
+  private void setUiController(UiController controller) {
+    this.controller = controller;
+  }
 
   /** Saves the data to the file in |directory| */
   public void save(byte[] data, String filename) {
 
+    // ugh ugh ugh.
+    setUiController(OpemInjector.injectUiController());
+    
     String state = Environment.getExternalStorageState();
     if (Environment.MEDIA_MOUNTED.equals(state)) {
 
@@ -64,13 +78,15 @@ public class FileSaver {
             new FileOutputStream(destFile));
         outputStream.write(data);
         outputStream.close();
+        controller.setOutputDirText("Saved to: " + destFile.getCanonicalPath());
       } catch (IOException e) {
-        e.printStackTrace();
-        //TODO(dantasse) handle this case too
+        controller.stopTakingPhotos();
+        controller.displayError("Sorry, there was an error saving a picture. " +
+        		"Maybe the SD card is full? Or not actually in the device?");
       }
-
     } else {
-      // TODO(dantasse) handle if you can't write to the file.
+      controller.stopTakingPhotos();
+      controller.displayError("Can't find the SD card.");
     }
   }
 }

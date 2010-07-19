@@ -24,9 +24,11 @@ public class MainActivity extends Activity implements OnClickListener {
   private Button startButton;
   private Button stopButton;
   private TextView text01;
-  private ImageView image01;
+//  private ImageView image01;
   private NumberPicker minutePicker;
   private NumberPicker secondPicker;
+  private TextView errorText;
+  private TextView outputDirText;
   
   /** Called when the activity is first created. */
   @Override
@@ -40,15 +42,18 @@ public class MainActivity extends Activity implements OnClickListener {
 
     model = OpemInjector.injectUiModel();
     controller = OpemInjector.injectUiController();
+    
 
     startButton = (Button) findViewById(R.id.StartButton);
     startButton.setOnClickListener(this);
     stopButton = (Button) findViewById(R.id.StopButton);
     stopButton.setOnClickListener(this);
     text01 = (TextView) findViewById(R.id.TextView01);
-    image01 = (ImageView) findViewById(R.id.ImageView01);
+//    image01 = (ImageView) findViewById(R.id.ImageView01);
     minutePicker = (NumberPicker) findViewById(R.id.MinutePicker);
     secondPicker = (NumberPicker) findViewById(R.id.SecondPicker);
+    errorText = (TextView) findViewById(R.id.ErrorText);
+    outputDirText = (TextView) findViewById(R.id.OutputDirText);
   }
 
   @Override
@@ -72,11 +77,13 @@ public class MainActivity extends Activity implements OnClickListener {
   public void update() {
     text01.setText("State: " + model.getCurrentState().toString() + 
         "\nPhotos taken: " + model.getPhotoCount());
-    image01.setImageBitmap(model.getCurrentImage());
+//    image01.setImageBitmap(model.getCurrentImage());
     boolean isTakingPhotos = (model.getCurrentState().equals(
         State.TAKING_PHOTOS));
     minutePicker.setEnabled(!isTakingPhotos);
     secondPicker.setEnabled(!isTakingPhotos);
     startButton.setEnabled(!isTakingPhotos);
+    errorText.setText(model.getErrorText());
+    outputDirText.setText(model.getOutputDirText());
   }
 }

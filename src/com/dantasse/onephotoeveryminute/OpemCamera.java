@@ -1,5 +1,7 @@
 package com.dantasse.onephotoeveryminute;
 
+import java.text.NumberFormat;
+
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 
@@ -7,12 +9,14 @@ public class OpemCamera {
 
   private Camera camera;
   private FileSaver fileSaver;
+  private NumberFormat numberFormat = NumberFormat.getIntegerInstance();
   
   private int counter = 0;
   // Called when the picture's jpeg data is available.
   private PictureCallback jpegCallback = new PictureCallback() {
     public void onPictureTaken(byte[] data, Camera callbackCamera) {
-      fileSaver.save(data, "picture" + counter + ".jpg");
+      numberFormat.setMinimumIntegerDigits(3);
+      fileSaver.save(data, numberFormat.format(counter) + ".jpg");
       counter++;
     }
   };

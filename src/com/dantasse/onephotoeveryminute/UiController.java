@@ -1,5 +1,7 @@
 package com.dantasse.onephotoeveryminute;
 
+import com.dantasse.onephotoeveryminute.UiModel.State;
+
 import android.graphics.Bitmap;
 import android.os.Handler;
 
@@ -33,7 +35,8 @@ public class UiController {
   public void startTakingPhotos() {
     int durationSeconds = view.getDurationSeconds();
     if (durationSeconds <= 0) {
-      return; //TODO(dantasse) display some error
+      model.setErrorText("There must be at least 1 second between pictures.");
+      return;
     }
     model.setDurationSeconds(durationSeconds);
     model.setCurrentState(UiModel.State.TAKING_PHOTOS);
@@ -48,5 +51,14 @@ public class UiController {
 
   public void displayImage(Bitmap image) {
     model.setCurrentImage(image);
+  }
+  
+  public void displayError(String errorText) {
+    model.setErrorText(errorText);
+    model.setCurrentState(State.NOT_TAKING_PHOTOS);
+  }
+
+  public void setOutputDirText(String outputDirText) {
+    model.setOutputDirText(outputDirText);
   }
 }
