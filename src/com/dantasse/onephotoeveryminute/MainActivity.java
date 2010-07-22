@@ -89,6 +89,7 @@ public class MainActivity extends Activity implements OnClickListener {
     minutePicker.setEnabled(!isTakingPhotos);
     secondPicker.setEnabled(!isTakingPhotos);
     startButton.setEnabled(!isTakingPhotos);
+    stopButton.setEnabled(isTakingPhotos);
     errorText.setText(model.getErrorText());
     outputDirText.setText(model.getOutputDirText());
   }
