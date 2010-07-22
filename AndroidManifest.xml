@@ -24,4 +24,5 @@
 
 
 <instrumentation android:targetPackage="com.dantasse.onephotoeveryminute" android:name="android.test.InstrumentationTestRunner"></instrumentation>
+<uses-sdk android:minSdkVersion="6"></uses-sdk>
 </manifest> 
