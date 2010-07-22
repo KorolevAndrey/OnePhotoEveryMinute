@@ -11,7 +11,8 @@ import android.os.Environment;
 
 
 /**
- * Handles saving pictures to the SD card.
+ * Handles saving pictures to the SD card.  The OpemCamera class owns this;
+ * when the OpemCamera is destroyed, this FileSaver is also destroyed.
  */
 public class FileSaver {
   
@@ -53,7 +54,7 @@ public class FileSaver {
 //    }
 //  }
 
-  private FileSaver() {
+  public FileSaver() {
     if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
       // Save things in /sdcard/Pictures, as per 
       // http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
@@ -97,7 +98,8 @@ public class FileSaver {
       }
     } else {
       controller.stopTakingPhotos();
-      controller.displayError("Can't find the SD card.");
+      controller.displayError("Can't find the SD card.  You must insert an SD" +
+      		" card to save pictures.");
     }
   }
 }

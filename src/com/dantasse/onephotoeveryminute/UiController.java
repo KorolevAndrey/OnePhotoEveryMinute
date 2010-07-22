@@ -2,7 +2,7 @@ package com.dantasse.onephotoeveryminute;
 
 import com.dantasse.onephotoeveryminute.UiModel.State;
 
-import android.graphics.Bitmap;
+//import android.graphics.Bitmap;
 import android.os.Handler;
 
 public class UiController {
@@ -27,8 +27,13 @@ public class UiController {
     this.camera = camera;
   }
   
+  /** Called on resume, needed because the camera is released on pause. */
+  public void setUp() {
+    camera.setUp();
+  }
+  
   public void tearDown() {
-    handler.removeCallbacks(takePhotoTask);
+    stopTakingPhotos();
     camera.tearDown();
   }
 
@@ -49,9 +54,9 @@ public class UiController {
     handler.removeCallbacks(takePhotoTask);
   }
 
-  public void displayImage(Bitmap image) {
-    model.setCurrentImage(image);
-  }
+//  public void displayImage(Bitmap image) {
+//    model.setCurrentImage(image);
+//  }
   
   public void displayError(String errorText) {
     model.setErrorText(errorText);

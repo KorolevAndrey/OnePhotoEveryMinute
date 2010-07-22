@@ -22,33 +22,45 @@ public class OpemCamera {
   };
 
   /**
-   * There should only be one OpemCamera, because it's just a wrapper around
-   * the Android Camera.
+   * There should only be one OpemCamera.
    */
   private static OpemCamera instance = null;
   public static OpemCamera getInstance() {
     if (instance == null) {
-      instance = new OpemCamera(OpemInjector.injectCamera(),
-          OpemInjector.injectFileSaver());
-      // You must call startPreview() even if you don't want a preview so the
-      // camera can determine focus and exposure.
-      // http://code.google.com/p/android/issues/detail?id=1702
-      instance.camera.startPreview();
+      instance = new OpemCamera(new FileSaver());
     }
     return instance;
   }
 
   // visible for testing
-  OpemCamera(Camera camera, FileSaver fileSaver) {
-    this.camera = camera;
+  OpemCamera(FileSaver fileSaver) {
     this.fileSaver = fileSaver;
   }
   
+  /** Called on app resume, needed because the camera is released on pause. */
+  public void setUp() {
+    if (camera == null) {
+      camera = Camera.open();
+    }
+    // one camera = one fileSaver.
+    fileSaver = new FileSaver();
+    // You must call startPreview() even if you don't want a preview so the
+    // camera can determine focus and exposure.
+    // http://code.google.com/p/android/issues/detail?id=1702
+    camera.startPreview();
+  }
+  
+  /** Called on pause. */
   public void tearDown() {
     // TODO(dantasse) if you start and stop the app a couple times, this throws
     // an exception.
     camera.stopPreview();
     camera.release();
+    // null it out because apparently there's no way to tell that it's been
+    // released (and is therefore unusable)
+    camera = null;
+    // one camera = one fileSaver.
+    fileSaver = null;
   }
   
   public void takePhoto() {

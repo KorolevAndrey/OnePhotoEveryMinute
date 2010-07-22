@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
+//import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -60,6 +60,12 @@ public class MainActivity extends Activity implements OnClickListener {
   public void onPause() {
     super.onPause();
     controller.tearDown();
+  }
+  
+  @Override
+  public void onResume() {
+    super.onResume();
+    controller.setUp();
   }
 
   public void onClick(View v) {

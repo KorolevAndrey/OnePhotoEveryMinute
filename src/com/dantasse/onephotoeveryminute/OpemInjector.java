@@ -1,7 +1,5 @@
 package com.dantasse.onephotoeveryminute;
 
-import android.hardware.Camera;
-
 /**
  * Static methods for dependency injection goodness.
  */
@@ -31,11 +29,7 @@ public class OpemInjector {
     return OpemCamera.getInstance();
   }
   
-  public static Camera injectCamera() {
-    return Camera.open();
-  }
-  
-  public static FileSaver injectFileSaver() {
-    return FileSaver.getInstance();
-  }
+//  public static FileSaver injectFileSaver() {
+//
+//  }
 }
