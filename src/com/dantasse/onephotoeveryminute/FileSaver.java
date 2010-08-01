@@ -27,32 +27,9 @@ public class FileSaver {
   public static FileSaver getInstance() {
     if (instance == null) {
       instance = new FileSaver();
-//      instance = new FileSaver(getPicturesDirectory(
-//          Environment.getExternalStorageState(),
-//          Environment.getExternalStorageDirectory()));
     }
     return instance;
   }
-
-  /**
-   * @param storageState whether there's an SD card mounted or not.  Typically
-   *   found by calling Environment.getExternalStorageState.
-   * @param root where the device wants you to put data.  Typically found by
-   *   calling Environment.getExternalStorageDirectory.
-   */
-//  public static File getPicturesDirectory(String storageState, File root) {
-//    if (Environment.MEDIA_MOUNTED.equals(storageState)) {
-//      // Save things in /sdcard/Pictures, as per 
-//      // http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
-//      File picturesDir = new File(root, "Pictures");
-//      File thisTimeDir = new File(picturesDir, formatter.format(new Date()));
-//      thisTimeDir.mkdirs();
-//      return thisTimeDir;
-//    } else {
-//      OpemInjector.injectUiModel().setErrorText("Can't find the SD card.");
-//      return null;
-//    }
-//  }
 
   public FileSaver() {
     if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {

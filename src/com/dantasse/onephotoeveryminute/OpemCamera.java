@@ -6,7 +6,6 @@ import java.text.NumberFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.Size;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -40,7 +39,6 @@ public class OpemCamera implements SurfaceHolder.Callback {
     return instance;
   }
 
-  // visible for testing
   OpemCamera(SurfaceView surfaceView, FileSaver fileSaver) {
     this.surfaceView = surfaceView;
     this.surfaceView.getHolder().addCallback(this);
