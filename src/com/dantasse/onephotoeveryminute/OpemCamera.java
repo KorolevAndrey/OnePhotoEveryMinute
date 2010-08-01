@@ -1,16 +1,23 @@
 package com.dantasse.onephotoeveryminute;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.Size;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
-public class OpemCamera {
+public class OpemCamera implements SurfaceHolder.Callback {
 
-  private Camera camera;
-  private FileSaver fileSaver;
+  private Camera camera = null;
+  private SurfaceView surfaceView = null;
+  private FileSaver fileSaver = null;
   private NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-  
+  private boolean previewRunning = false;
+
   private int counter = 0;
   // Called when the picture's jpeg data is available.
   private PictureCallback jpegCallback = new PictureCallback() {
@@ -27,44 +34,72 @@ public class OpemCamera {
   private static OpemCamera instance = null;
   public static OpemCamera getInstance() {
     if (instance == null) {
-      instance = new OpemCamera(new FileSaver());
+      instance = new OpemCamera(OpemInjector.getView().getCameraSurface(),
+          new FileSaver());
     }
     return instance;
   }
 
   // visible for testing
-  OpemCamera(FileSaver fileSaver) {
+  OpemCamera(SurfaceView surfaceView, FileSaver fileSaver) {
+    this.surfaceView = surfaceView;
+    this.surfaceView.getHolder().addCallback(this);
+    this.surfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     this.fileSaver = fileSaver;
   }
-  
+
   /** Called on app resume, needed because the camera is released on pause. */
   public void setUp() {
-    if (camera == null) {
-      camera = Camera.open();
+    if (fileSaver == null) {
+      fileSaver = new FileSaver();
     }
-    // one camera = one fileSaver.
-    fileSaver = new FileSaver();
-    // You must call startPreview() even if you don't want a preview so the
-    // camera can determine focus and exposure.
-    // http://code.google.com/p/android/issues/detail?id=1702
-    camera.startPreview();
   }
-  
+
   /** Called on pause. */
   public void tearDown() {
-    // TODO(dantasse) if you start and stop the app a couple times, this throws
-    // an exception.
-    camera.stopPreview();
-    camera.release();
-    // null it out because apparently there's no way to tell that it's been
-    // released (and is therefore unusable)
-    camera = null;
-    // one camera = one fileSaver.
     fileSaver = null;
   }
-  
+
   public void takePhoto() {
-    // TODO(dantasse) add flash/focus/something?
     camera.takePicture(null, null, jpegCallback);
+  }
+
+  public void surfaceCreated(SurfaceHolder holder) {
+    camera = Camera.open();
+    try {
+      camera.setPreviewDisplay(holder);
+    } catch (IOException exception) {
+      camera.release();
+      camera = null;
+      // TODO: add more exception handling logic here
+    }
+  }
+
+  public void surfaceChanged(SurfaceHolder holder, int format, int width,
+      int height) {
+    if (previewRunning) {
+      camera.stopPreview();
+    }
+
+    Camera.Parameters params = camera.getParameters();
+    // oh my god I don't care about the preview, it can be whatever size
+    Size previewSize = params.getSupportedPreviewSizes().get(0);
+    params.setPreviewSize(previewSize.width, previewSize.height);
+    int previewFormat = params.getSupportedPreviewFormats().get(0);
+    params.setPreviewFormat(previewFormat);
+    int previewFrameRate = params.getSupportedPreviewFrameRates().get(0);
+    params.setPreviewFrameRate(previewFrameRate);
+    // TODO(dantasse) add flash/focus/something?
+    camera.setParameters(params);
+
+    camera.startPreview();
+    previewRunning = true;
+  }
+
+  public void surfaceDestroyed(SurfaceHolder holder) {
+    camera.stopPreview();
+    previewRunning = false;
+    camera.release();
+    camera = null;
   }
 }

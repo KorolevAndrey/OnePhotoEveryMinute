@@ -5,6 +5,7 @@ import com.dantasse.onephotoeveryminute.UiModel.State;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -42,7 +43,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
     model = OpemInjector.injectUiModel();
     controller = OpemInjector.injectUiController();
-    
 
     startButton = (Button) findViewById(R.id.StartButton);
     startButton.setOnClickListener(this);
@@ -54,6 +54,10 @@ public class MainActivity extends Activity implements OnClickListener {
     secondPicker = (NumberPicker) findViewById(R.id.SecondPicker);
     errorText = (TextView) findViewById(R.id.ErrorText);
     outputDirText = (TextView) findViewById(R.id.OutputDirText);
+  }
+  
+  public SurfaceView getCameraSurface() {
+    return (SurfaceView) findViewById(R.id.CameraSurface);
   }
 
   @Override
